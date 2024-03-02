@@ -1,0 +1,24 @@
+#/usr/bin/env bash 
+. "$(dirname -- "$0")/_/husky.sh" 
+# Array of protected paths (regex) 
+#protect=(".*package\.ison" ".*package-lock\.json" "«*yarn\. lock" "patches/.**) 
+#allow_users=(franciesfernandes). 
+
+local_branch="$(git rev-parse --abbrev-ref HEAD)"
+valid_branch_regex="^(bugfix|feature|maintenance|release|spike|task)\/[a-zA-Z0-9\-]+$" 
+
+if [[ ! $local_branch =~ $valid_branch_regex ]] 
+then
+ echo "nYour branch $local_branch has an invalid name, it should follow: $valid_branch_regex. Please rename your branch with the following and try again." 
+ echo "In git branch -m old-branch-name new-branch-name" 
+ echo " git push origin -delete old-name (may fail due to permissions)" 
+ echo  "git push origin -u new-name" 
+ 
+ echo "\n For example feature/WFU-4545-human-readable-bit \n"
+fi
+#valid_branch_regex="^(bugfix|feature|maintenance|release|spike|task)\/[a-zA-Z0-9\-]+$"
+#local_branch="($git rev-parse --abbrev-ref HEAD)"
+
+yarn pretty-quick --staged
+yarn lint-staged
+yarn tsc --noEmit
