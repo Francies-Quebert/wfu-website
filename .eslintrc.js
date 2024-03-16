@@ -31,5 +31,6 @@ module.exports = {
     '@typescript-eslint/no-empty-interface': 'off', // Allow empty interfaces
     'react-hooks/rules-of-hooks': 'error', // Enforce rules of hooks
     'react-hooks/exhaustive-deps': 'warn', // Warn if dependencies are not explicitly listed in useEffect
+    'react/jsx-uses-react': 'off',
   },
 };

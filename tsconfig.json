@@ -34,7 +34,8 @@
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@assets/*": ["./assets/*"]
     }
   },
   "include": [

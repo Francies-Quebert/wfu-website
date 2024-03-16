@@ -16,7 +16,8 @@
     "eslint-plugin-jest": "^27.9.0",
     "next": "14.1.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-lottie": "^1.2.4"
   },
   "devDependencies": {
     "@testing-library/dom": "^9.3.4",
@@ -26,6 +27,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-lottie": "^1.2.10",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.1.1",

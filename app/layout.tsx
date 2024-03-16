@@ -1,6 +1,15 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import Layout from '@/components/layout/layout';
+import { Bonheur_Royale } from 'next/font/google';
+
+const bonheur_royale = Bonheur_Royale({
+  weight: ['400'],
+  display: 'swap',
+  subsets: ['latin'],
+  variable: '--font-bonheur-royale',
+});
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,8 +24,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className={`${bonheur_royale.variable}`}>
+      <body className={inter.className}>
+        <Layout>{children}</Layout>
+      </body>
     </html>
   );
 }
