@@ -23,16 +23,7 @@ export const Previews = ({
         key={file.name}
         className="flex flex-shrink-0 w-24 h-24 object-cover mr-4 pl-2 items-center justify-center"
       >
-        <Image
-          src={file.preview}
-          // Revoke data uri after image is loaded
-          onLoad={() => {
-            URL.revokeObjectURL(file.preview as string);
-          }}
-          height={100}
-          width={100}
-          alt={''}
-        />
+        <Image src={file.preview} height={100} width={100} alt={''} />
       </div>
     ),
   );

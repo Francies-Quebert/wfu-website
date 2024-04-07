@@ -19,15 +19,6 @@ export const FileUploader = () => {
         }),
       ),
     );
-    acceptedFiles.forEach((file: Blob) => {
-      // Do something with the image files
-      const reader = new FileReader();
-      reader.onload = () => {
-        // Do something with the image data, like displaying previews
-        console.log(reader.result);
-      };
-      reader.readAsDataURL(file);
-    });
   }, []);
 
   const {
