@@ -35,7 +35,8 @@
     "allowUnusedLabels": false,
     "paths": {
       "@/*": ["./*"],
-      "@assets/*": ["./assets/*"]
+      "@assets/*": ["./assets/*"],
+      "@components/*": ["./components/*"]
     }
   },
   "include": [

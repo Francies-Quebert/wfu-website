@@ -3,7 +3,7 @@ import React from 'react';
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <main>
+    <main className="font-poppins">
       <nav className="flex justify-center items-center">
         <Image height={150} alt="logo" src={require('@assets/logo.png')} />
       </nav>

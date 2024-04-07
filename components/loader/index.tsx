@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import { Suspense } from 'react';
 import Lottie from 'react-lottie';
 import * as animationData from '@assets/loader.json';
 
@@ -12,12 +12,12 @@ const defaultOptions = {
   },
 };
 
-function Loading() {
+export const Loader = () => {
   return (
-    <div className="flex self-center ">
-      <Lottie options={defaultOptions} height={400} width={400} />
-    </div>
+    <Suspense>
+      <div className="flex max-w-full max-h-full">
+        <Lottie options={defaultOptions} />
+      </div>
+    </Suspense>
   );
-}
-
-export default Loading;
+};
