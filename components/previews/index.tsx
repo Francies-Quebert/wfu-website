@@ -21,9 +21,16 @@ export const Previews = ({
     }) => (
       <div
         key={file.name}
-        className="flex flex-shrink-0 w-24 h-24 object-cover mr-4 pl-2 items-center justify-center"
+        className="flex flex-shrink-0 w-24 h-24 object-cover mr-4 items-center justify-center border border-primary"
       >
-        <Image src={file.preview} height={100} width={100} alt={''} />
+        <Image
+          src={file.preview}
+          height={100}
+          width={100}
+          alt={''}
+          className="w-24 h-24 object-contain p-1"
+          draggable={false}
+        />
       </div>
     ),
   );
@@ -35,16 +42,13 @@ export const Previews = ({
         URL.revokeObjectURL(file.preview),
       );
   }, [files]);
-  console.log(files);
 
   return (
     <section className="container">
       <div {...getRootProps()}>
         <input {...getInputProps()} />
       </div>
-      <aside
-        className={`max-w-6xl flex overflow-x-auto touch-pan-x ${files.length > 0 ? 'lg:h-[120px]' : ''}`}
-      >
+      <aside className={`max-w-6xl pt-4 flex overflow-x-auto touch-pan-x `}>
         {thumbs}
       </aside>
     </section>
