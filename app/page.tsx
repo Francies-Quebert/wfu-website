@@ -13,7 +13,7 @@ export default function Home() {
         />
       </div>
 
-      <div className=" w-full py-10">
+      <div className=" w-full max-w-4xl py-10">
         <Address />
       </div>
 
