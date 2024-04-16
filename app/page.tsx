@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { FileUploader } from '@/components/file-upload';
+import Address from '@/components/address';
 
 export default function Home() {
   return (
@@ -23,6 +24,9 @@ export default function Home() {
       </div>
       <div className="max-w-full py-4 text-center ">
         <FileUploader />
+      </div>
+      <div className="bg-[#92d4de2e] w-full py-10">
+        <Address />
       </div>
     </main>
   );
