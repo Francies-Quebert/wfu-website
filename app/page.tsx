@@ -12,10 +12,9 @@ export default function Home() {
           src={require('@assets/bg.gif')}
         />
       </div>
-      <div className="py-6 px-4">
-        <div className="font-bonheur-royale text-6xl text-center">
-          Larson & Muriel
-        </div>
+
+      <div className=" w-full py-10">
+        <Address />
       </div>
 
       <div className="py-2 px-4 text-center  max-w-xl text-primary-dark">
@@ -24,9 +23,6 @@ export default function Home() {
       </div>
       <div className="max-w-full py-4 text-center ">
         <FileUploader />
-      </div>
-      <div className="bg-[#92d4de2e] w-full py-10">
-        <Address />
       </div>
     </main>
   );

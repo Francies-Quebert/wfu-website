@@ -2,7 +2,7 @@ import React from 'react';
 
 const Address = () => {
   return (
-    <div className="px-6">
+    <div className="px-6 bg-[#92d4de2e] py-7">
       <div className="uppercase tracking-wider font-semibold text-sm text-center">
         <p>Love it always protects,always </p>
         <p>trusts, always hopes, always</p>
