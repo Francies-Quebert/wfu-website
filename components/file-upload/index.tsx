@@ -7,14 +7,13 @@ import { useDropzone } from 'react-dropzone';
 import { useCallback, useState } from 'react';
 import { Previews } from '../previews';
 import Tap from '@assets/tap.gif';
-import { getSignedURL } from '@/utility/actions';
+import { getBucketSignedURL } from '@/utility/actions';
 
 export const FileUploader = () => {
   const [files, setFiles] = useState<any>([]);
-  console.log(files);
 
-  const onDrop = useCallback(async (acceptedFiles: Blob[]) => {
-    const tmp_files = acceptedFiles.map((file: Blob) => {
+  const onDrop = useCallback(async (acceptedFiles: any) => {
+    const tmp_files = acceptedFiles.map((file: any) => {
       if (file) {
         return Object.assign(file, {
           preview: URL.createObjectURL(file),
@@ -24,25 +23,23 @@ export const FileUploader = () => {
       }
     });
     setFiles(tmp_files);
-    console.log(process.env);
-    const signedURLResult = await getSignedURL();
-    if (signedURLResult.failure !== undefined) {
-      console.error(signedURLResult.failure);
-      return;
-    }
 
-    const { url } = signedURLResult.success;
-    console.log('URL==========', url, tmp_files);
-    tmp_files.forEach(
-      async (tf) =>
-        await fetch(url, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': tf?.type || 'image/*',
-          },
-          body: tf,
-        }),
-    );
+    tmp_files.forEach(async (tf: any) => {
+      const signedURLResult = await getBucketSignedURL(tf.type, tf.name);
+      if (signedURLResult.failure !== undefined) {
+        console.error(signedURLResult.failure);
+        return;
+      }
+      const { url } = signedURLResult.success;
+      console.log('URL==========', url);
+      await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': tf?.type || 'image/*',
+        },
+        body: tf,
+      });
+    });
   }, []);
 
   const { getRootProps, getInputProps, isFileDialogActive } = useDropzone({

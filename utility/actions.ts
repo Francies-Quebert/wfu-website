@@ -1,39 +1,43 @@
 'use server';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { randomUUID } from 'crypto';
 
 const s3Client = new S3Client({
   region: process.env.AWS_BUCKET_REGION!,
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY!,
-    secretAccessKey: process.env.AWS_SECRET_KEY!,
+    secretAccessKey: 'dsd' + process.env.AWS_SECRET_KEY!,
   },
 });
+
+const allowedFileTypes = ['image', 'video'];
 type SignedURLResponse = Promise<
-  | { failure?: undefined; success: { url: string } }
-  | { failure: string; success?: undefined }
+  | { failure?: undefined; success: { url: string }; error?: undefined }
+  | { failure: string; success?: undefined; error?: any }
 >;
 
-export async function getSignedURL(): Promise<SignedURLResponse> {
-  console.log(
-    process.env.AWS_SECRET_KEY,
-    process.env.AWS_ACCESS_KEY,
-    process.env.AWS_BUCKET_REGION,
-  );
+export async function getBucketSignedURL(
+  fileType: string,
+  fileName: string,
+): Promise<SignedURLResponse> {
+  if (!allowedFileTypes.includes(fileType.split('/')[0])) {
+    return { failure: 'File type not allowed' };
+  }
 
   const putObjectCommand = new PutObjectCommand({
     Bucket: process.env.AWS_BUCKET_NAME!,
-    Key: 'test-file',
+    Key: fileName + randomUUID(),
   });
-
   try {
-    const url = await getSignedUrl(
-      s3Client,
-      putObjectCommand,
-      { expiresIn: 60 * 1000 * 30 }, // 60 seconds
-    );
+    const url = await getSignedUrl(s3Client, putObjectCommand, {
+      expiresIn: 60 * 30,
+    });
+
     return { success: { url } };
   } catch (error) {
+    console.log(error);
+
     return { failure: 'not authenticated' };
   }
 }
