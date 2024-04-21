@@ -6,7 +6,7 @@ const s3Client = new S3Client({
   region: process.env.AWS_BUCKET_REGION!,
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+    secretAccessKey: process.env.AWS_SECRET_KEY!,
   },
 });
 type SignedURLResponse = Promise<
@@ -15,6 +15,12 @@ type SignedURLResponse = Promise<
 >;
 
 export async function getSignedURL(): Promise<SignedURLResponse> {
+  console.log(
+    process.env.AWS_SECRET_KEY,
+    process.env.AWS_ACCESS_KEY,
+    process.env.AWS_BUCKET_REGION,
+  );
+
   const putObjectCommand = new PutObjectCommand({
     Bucket: process.env.AWS_BUCKET_NAME!,
     Key: 'test-file',

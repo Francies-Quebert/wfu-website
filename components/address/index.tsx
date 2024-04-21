@@ -15,7 +15,7 @@ const Address = () => {
         Larson & Muriel
       </div>
 
-      <div className=" flex lg:flex-row flex-col lg:gap-24 gap-8  capitalize font-semibold text-sm justify-center t  items-center">
+      {/* <div className=" flex lg:flex-row flex-col lg:gap-24 gap-8  capitalize font-semibold text-sm justify-center t  items-center">
         <div className="lg:text-left text-center">
           <p>s/o mr. simson fernandes</p>
           <p>& mrs. judith vas</p>
@@ -24,10 +24,10 @@ const Address = () => {
           <p>d/o mr. jose maria andre fernandes</p>
           <p>& mrs. rosalina fernandes</p>
         </div>
-      </div>
+      </div> */}
       <div className="flex gap-12 text-center justify-center items-center py-6 ">
         <div className="border-t-2 border-b-2 border-black w-24 p-2">
-          <p>Monday</p>
+          <p>Wednesday</p>
         </div>
         <div className="tracking-widest font-semibold">
           <h2 className="text-lg ">May</h2>

@@ -7,17 +7,41 @@ import { useDropzone } from 'react-dropzone';
 import { useCallback, useState } from 'react';
 import { Previews } from '../previews';
 import Tap from '@assets/tap.gif';
+import { getSignedURL } from '@/utility/actions';
 
 export const FileUploader = () => {
   const [files, setFiles] = useState<any>([]);
+  console.log(files);
 
-  const onDrop = useCallback((acceptedFiles: Blob[]) => {
-    setFiles(
-      acceptedFiles.map((file: Blob) =>
-        Object.assign(file, {
+  const onDrop = useCallback(async (acceptedFiles: Blob[]) => {
+    const tmp_files = acceptedFiles.map((file: Blob) => {
+      if (file) {
+        return Object.assign(file, {
           preview: URL.createObjectURL(file),
+        });
+      } else {
+        return;
+      }
+    });
+    setFiles(tmp_files);
+    console.log(process.env);
+    const signedURLResult = await getSignedURL();
+    if (signedURLResult.failure !== undefined) {
+      console.error(signedURLResult.failure);
+      return;
+    }
+
+    const { url } = signedURLResult.success;
+    console.log('URL==========', url, tmp_files);
+    tmp_files.forEach(
+      async (tf) =>
+        await fetch(url, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': tf?.type || 'image/*',
+          },
+          body: tf,
         }),
-      ),
     );
   }, []);
 
