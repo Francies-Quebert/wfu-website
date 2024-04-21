@@ -22,3 +22,39 @@ body {
 
 @layer utilities {
 }
+@layer components {
+  .indicator {
+    @apply relative w-4 h-4 transform rotate-45 border-primary-dark;
+  }
+  .indicator span {
+    @apply absolute left-0 top-0 w-full h-full box-border border-solid border-b-2 border-r-2 border-primary;
+    animation: animate 1s linear infinite;
+  }
+  .indicator span:nth-child(1) {
+    @apply top-[-30px] left-[-30px] delay-0;
+  }
+  .indicator span:nth-child(2) {
+    @apply top-[-15px] left-[-15px] delay-200;
+  }
+  .indicator span:nth-child(3) {
+    @apply top-0 left-0 delay-500;
+  }
+  .indicator span:nth-child(4) {
+    @apply top-[15px] left-[15px] delay-700;
+  }
+  .indicator span:nth-child(5) {
+    @apply top-[30px] left-[30px] delay-1000;
+  }
+  @keyframes animate {
+    0% {
+      transform: translate(0, 0);
+    }
+    20% {
+      transform: translate(15px, 15px);
+    }
+    20.1%,
+    100% {
+      border-color: #92d4deff;
+    }
+  }
+}
