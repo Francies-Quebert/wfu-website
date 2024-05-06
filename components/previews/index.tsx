@@ -27,7 +27,13 @@ export const Previews = ({
         className="relative flex flex-shrink-0 w-24 h-24 object-cover mr-4 items-center justify-center border border-primary"
       >
         {file.type.includes('video') ? (
-          <video src={file.preview as string} autoPlay controls={false} muted />
+          <video
+            src={file.preview as string}
+            autoPlay
+            controls={false}
+            muted
+            className="w-24 h-24 object-contain p-1"
+          />
         ) : (
           <Image
             src={file.preview}
