@@ -20,19 +20,24 @@ export const Previews = ({
     (file: {
       name: Key | null | undefined;
       preview: string | StaticImport;
+      type: string;
     }) => (
       <div
         key={file.name}
-        className="flex flex-shrink-0 w-24 h-24 object-cover mr-4 items-center justify-center border border-primary"
+        className="relative flex flex-shrink-0 w-24 h-24 object-cover mr-4 items-center justify-center border border-primary"
       >
-        <Image
-          src={file.preview}
-          height={100}
-          width={100}
-          alt={''}
-          className="w-24 h-24 object-contain p-1"
-          draggable={false}
-        />
+        {file.type.includes('video') ? (
+          <video src={file.preview as string} autoPlay controls={false} muted />
+        ) : (
+          <Image
+            src={file.preview}
+            height={100}
+            width={100}
+            alt={''}
+            className="w-24 h-24 object-contain p-1"
+            draggable={false}
+          />
+        )}
         {loading && (
           <div className=" absolute h-full w-full bg-white/60 flex justify-center items-center flex-col">
             <div
