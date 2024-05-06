@@ -8,11 +8,15 @@ import { useCallback, useState } from 'react';
 import { Previews } from '../previews';
 import Tap from '@assets/tap.gif';
 import { getBucketSignedURL } from '@/utility/actions';
+import { Button } from '@components/button';
 
 export const FileUploader = () => {
-  const [files, setFiles] = useState<any>([]);
+  const [files, setFiles] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const onDrop = useCallback(async (acceptedFiles: any) => {
+    setLoading(() => true);
+
     const tmp_files = acceptedFiles.map((file: any) => {
       if (file) {
         return Object.assign(file, {
@@ -24,21 +28,27 @@ export const FileUploader = () => {
     });
     setFiles(tmp_files);
 
-    tmp_files.forEach(async (tf: any) => {
-      const signedURLResult = await getBucketSignedURL(tf.type, tf.name);
-      if (signedURLResult.failure !== undefined) {
-        console.error(signedURLResult.failure);
-        return;
-      }
-      const { url } = signedURLResult.success;
-      console.log('URL==========', url);
-      await fetch(url, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': tf?.type || 'image/*',
-        },
-        body: tf,
-      });
+    await Promise.all(
+      tmp_files.map(async (tf: any) => {
+        if (tf) return 'failed';
+        const signedURLResult = await getBucketSignedURL(tf.type, tf.name);
+
+        if (signedURLResult.failure !== undefined) {
+          console.error(signedURLResult.failure);
+          return 'failed';
+        }
+        const { url } = signedURLResult.success;
+        await fetch(url, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': tf?.type || 'image/*',
+          },
+          body: tf,
+        });
+        return tf.name;
+      }),
+    ).finally(() => {
+      setLoading(() => false);
     });
   }, []);
 
@@ -87,7 +97,18 @@ export const FileUploader = () => {
         getRootProps={getRootProps}
         getInputProps={getInputProps}
         files={files}
+        loading={loading}
       />
+      {files.length ? (
+        <Button
+          type="bordered"
+          onClick={() => {
+            setFiles([]);
+          }}
+        >
+          Clear
+        </Button>
+      ) : null}
     </>
   );
 };

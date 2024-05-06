@@ -7,12 +7,14 @@ type PreviewProps = {
   getRootProps: <T extends DropzoneRootProps>() => T;
   getInputProps: <T extends DropzoneInputProps>() => T;
   files: any;
+  loading: boolean;
 };
 
 export const Previews = ({
   getRootProps,
   getInputProps,
   files,
+  loading,
 }: PreviewProps) => {
   const thumbs = files.map(
     (file: {
@@ -31,6 +33,18 @@ export const Previews = ({
           className="w-24 h-24 object-contain p-1"
           draggable={false}
         />
+        {loading && (
+          <div className=" absolute h-full w-full bg-white/60 flex justify-center items-center flex-col">
+            <div
+              className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
+              role="status"
+            >
+              <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                Loading...
+              </span>
+            </div>
+          </div>
+        )}
       </div>
     ),
   );
