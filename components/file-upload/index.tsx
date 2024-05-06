@@ -30,7 +30,7 @@ export const FileUploader = () => {
 
     await Promise.all(
       tmp_files.map(async (tf: any) => {
-        if (tf) return 'failed';
+        if (!tf) return 'failed';
         const signedURLResult = await getBucketSignedURL(tf.type, tf.name);
 
         if (signedURLResult.failure !== undefined) {
@@ -58,7 +58,7 @@ export const FileUploader = () => {
       'image/*': [],
       'video/*': [],
     },
-    maxSize: 10 * 1000000, //will be 500 * 1000000 in production
+    maxSize: 500 * 1000000, //will be 500 * 1000000 in production
   });
 
   const isUploading = isFileDialogActive;
